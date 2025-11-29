@@ -5,7 +5,7 @@ import Providers from '@/components/Providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Learning Platform - Aprende Sin Límites',
+  title: "Amigo's Academy",
   description: 'Plataforma de cursos online con MERN stack',
 };
 

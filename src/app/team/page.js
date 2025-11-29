@@ -2,9 +2,9 @@ import Navbar from '@/components/Navbar';
 
 export default function TeamPage() {
   const team = [
-    { id: 1, name: 'Juan Pérez', role: 'Instructor Senior', specialty: 'Matemáticas' },
-    { id: 2, name: 'María García', role: 'Instructora', specialty: 'Programación' },
-    { id: 3, name: 'Carlos López', role: 'Instructor', specialty: 'Idiomas' },
+    { id: 1, name: 'Santiago Aguilar', role: 'Developer', specialty: 'Programming' },
+    { id: 2, name: 'Leonardo Vizcaíno', role: 'Developer', specialty: 'Programming' },
+    { id: 3, name: 'Adrian Gallardo', role: 'Developer', specialty: 'Programming' },
   ];
 
   return (
