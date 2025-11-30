@@ -5,12 +5,20 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import { BookOpen, TrendingUp } from 'lucide-react';
+import { Course } from '@/types';
+
+interface EnrolledCourse {
+  courseId: Course;
+  progress: number;
+  completedLessons: number[];
+  enrolledAt: Date;
+}
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -18,7 +26,7 @@ export default function Dashboard() {
     } else if (status === 'authenticated') {
       fetchEnrolledCourses();
     }
-  }, [status]);
+  }, [status, router]);
 
   const fetchEnrolledCourses = async () => {
     try {

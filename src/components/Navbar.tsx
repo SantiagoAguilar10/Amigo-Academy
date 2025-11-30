@@ -7,7 +7,7 @@ import { BookOpen, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
     <nav className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
@@ -67,20 +67,40 @@ export default function Navbar() {
 
         {mobileMenuOpen && (
           <div className="md:hidden pb-4 space-y-2">
-            <Link href="/" className="block py-2 hover:bg-blue-700 px-2 rounded">
+            <Link 
+              href="/" 
+              className="block py-2 hover:bg-blue-700 px-2 rounded"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Home
             </Link>
-            <Link href="/courses" className="block py-2 hover:bg-blue-700 px-2 rounded">
+            <Link 
+              href="/courses" 
+              className="block py-2 hover:bg-blue-700 px-2 rounded"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               All Courses
             </Link>
-            <Link href="/team" className="block py-2 hover:bg-blue-700 px-2 rounded">
+            <Link 
+              href="/team" 
+              className="block py-2 hover:bg-blue-700 px-2 rounded"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Team
             </Link>
-            <Link href="/contact" className="block py-2 hover:bg-blue-700 px-2 rounded">
+            <Link 
+              href="/contact" 
+              className="block py-2 hover:bg-blue-700 px-2 rounded"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Contact Us
             </Link>
             {session && (
-              <Link href="/dashboard" className="block py-2 hover:bg-blue-700 px-2 rounded">
+              <Link 
+                href="/dashboard" 
+                className="block py-2 hover:bg-blue-700 px-2 rounded"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Dashboard
               </Link>
             )}

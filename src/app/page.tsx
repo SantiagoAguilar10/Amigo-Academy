@@ -2,11 +2,39 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import CourseCard from '@/components/CourseCard';
 
-async function getFeaturedCourses() {
+// Definir tipos
+interface Lesson {
+  title: string;
+  type: string;
+  content?: {
+    videoUrl?: string;
+    textContent?: string;
+  };
+  order: number;
+}
+
+interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  imageUrl?: string;
+  lessons?: Lesson[];
+  enrollmentCount?: number;
+  createdAt?: string;
+}
+
+async function getFeaturedCourses(): Promise<Course[]> {
   try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL}/api/courses`, {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/courses`, {
       cache: 'no-store',
     });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch courses');
+    }
+    
     const data = await response.json();
     return data.courses?.slice(0, 3) || [];
   } catch (error) {
@@ -66,11 +94,22 @@ export default async function Home() {
 
         {/* Featured Courses */}
         <h2 className="text-3xl font-bold mb-8 text-center">Cursos Destacados</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {courses.map(course => (
-            <CourseCard key={course._id} course={course} />
-          ))}
-        </div>
+        {courses.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg mb-4">
+              Aún no hay cursos disponibles.
+            </p>
+            <p className="text-gray-500">
+              ¡Pronto agregaremos contenido increíble para ti!
+            </p>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-6">
+            {courses.map((course) => (
+              <CourseCard key={course._id} course={course} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Footer */}

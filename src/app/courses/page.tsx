@@ -1,11 +1,18 @@
 import Navbar from '@/components/Navbar';
 import CourseCard from '@/components/CourseCard';
+import { Course } from '@/types';
 
-async function getAllCourses() {
+async function getAllCourses(): Promise<Course[]> {
   try {
-    const response = await fetch(`${process.env.NEXTAUTH_URL}/api/courses`, {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/courses`, {
       cache: 'no-store',
     });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch courses');
+    }
+    
     const data = await response.json();
     return data.courses || [];
   } catch (error) {
@@ -32,7 +39,7 @@ export default async function CoursesPage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-6">
-            {courses.map(course => (
+            {courses.map((course) => (
               <CourseCard key={course._id} course={course} />
             ))}
           </div>

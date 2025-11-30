@@ -1,7 +1,14 @@
 import Navbar from '@/components/Navbar';
 
+interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  specialty: string;
+}
+
 export default function TeamPage() {
-  const team = [
+  const team: TeamMember[] = [
     { id: 1, name: 'Santiago Aguilar', role: 'Developer', specialty: 'Programming' },
     { id: 2, name: 'Leonardo Vizcaíno', role: 'Developer', specialty: 'Programming' },
     { id: 3, name: 'Adrian Gallardo', role: 'Developer', specialty: 'Programming' },

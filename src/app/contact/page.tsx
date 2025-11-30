@@ -1,19 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import Navbar from '@/components/Navbar';
 import { User, Mail, MessageSquare } from 'lucide-react';
 
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     message: '',
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Por favor completa todos los campos');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -51,43 +69,43 @@ export default function ContactPage() {
           
           <div className="space-y-6">
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+              <div className="block text-gray-700 font-semibold mb-2">
                 <User className="inline mr-2" size={20} />
                 Nombre
-              </label>
+              </div>
               <input
                 type="text"
+                name="name"
                 value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+              <div className="block text-gray-700 font-semibold mb-2">
                 <Mail className="inline mr-2" size={20} />
                 Correo Electrónico
-              </label>
+              </div>
               <input
                 type="email"
+                name="email"
                 value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+              <div className="block text-gray-700 font-semibold mb-2">
                 <MessageSquare className="inline mr-2" size={20} />
                 Mensaje
-              </label>
+              </div>
               <textarea
+                name="message"
                 value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-32"
-                required
               />
             </div>
 

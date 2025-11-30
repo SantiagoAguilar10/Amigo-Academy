@@ -4,9 +4,28 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { BookOpen, Clock } from 'lucide-react';
 
-export default function CourseCard({ course, enrolled = false, onEnroll }) {
+interface Lesson {
+  title: string;
+  type: string;
+}
+
+interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  category: string;
+  lessons?: Lesson[];
+}
+
+interface CourseCardProps {
+  course: Course;
+  enrolled?: boolean;
+  onEnroll?: () => void;
+}
+
+export default function CourseCard({ course, enrolled = false, onEnroll }: CourseCardProps) {
   const { data: session } = useSession();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleEnroll = async () => {
     if (!session) {

@@ -1,15 +1,20 @@
-import './globals.css';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import './globals.css';
 import Providers from '@/components/Providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: "Amigo's Academy",
+export const metadata: Metadata = {
+  title: 'Learning Platform - Aprende Sin Límites',
   description: 'Plataforma de cursos online con MERN stack',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="es">
       <body className={inter.className}>
